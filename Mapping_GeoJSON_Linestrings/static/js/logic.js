@@ -24,7 +24,8 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 // Create a base layer that holds both maps.
 let baseMaps = {
   Street: streets,
-  Dark: dark
+  Dark: dark,
+  Light: light
 };
 
 // // Create the map object with center at the San Francisco airport.
@@ -32,9 +33,9 @@ let baseMaps = {
 
 // Create the map object with center and zoom level.
 let map = L.map('mapid', {
-  center: [40.7, -94.5],
-  zoom: 4,
-  layers: [streets]
+  center: [44.0, -80.0],
+  zoom: 2,
+  layers: [light]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
@@ -44,7 +45,8 @@ L.control.layers(baseMaps).addTo(map);
 // baseMaps.addTo(map);
 
 // Accessing the airport GeoJSON URL
-let airportData = "https://raw.githubusercontent.com/hankai26/Mapping_Earthquakes/main/majorAirports.json";
+//let airportData = "https://raw.githubusercontent.com/hankai26/Mapping_Earthquakes/main/majorAirports.json";
+let torontoData = "https://github.com/hankai26/Mapping_Earthquakes/blob/Mapping_GeoJSON_Linestrings/majorAirports.json";
 
 // Grabbing our GeoJSON data.
 d3.json(airportData).then(function(data) {
