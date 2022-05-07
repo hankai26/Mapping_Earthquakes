@@ -35,7 +35,7 @@ let baseMaps = {
 let map = L.map('mapid', {
   center: [44.0, -80.0],
   zoom: 2,
-  layers: [light]
+  layers: [dark]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
@@ -45,14 +45,44 @@ L.control.layers(baseMaps).addTo(map);
 // baseMaps.addTo(map);
 
 // Accessing the airport GeoJSON URL
-//let airportData = "https://raw.githubusercontent.com/hankai26/Mapping_Earthquakes/main/majorAirports.json";
-let torontoData = "https://github.com/hankai26/Mapping_Earthquakes/blob/Mapping_GeoJSON_Linestrings/majorAirports.json";
+// let airportData = "https://raw.githubusercontent.com/hankai26/Mapping_Earthquakes/main/majorAirports.json";
+let torontoData = "https://raw.githubusercontent.com/hankai26/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json";
 
+// Create a style for the lines.
+let myStyle = {
+  color: "#ffffa1",
+  weight: 2
+}
 // Grabbing our GeoJSON data.
-d3.json(airportData).then(function(data) {
+d3.json(torontoData).then(function(data) {
   console.log(data);
+
   // Creating a GeoJSON layer with the retrieved data.
-  L.geoJSON(data).addTo(map);
+    L.geoJSON(data, {
+      style: myStyle,
+      onEachFeature: function(feature, layer){
+        layer.bindPopup("<h3> Airline: " + feature.properties.airline + "</h3> <hr><h3> Destination: "+feature.properties.dst +"</h3>");
+      }
+    })
+    .addTo(map);
+  
+});
+
+// data.forEach(function(destin){
+//   // Creating a GeoJSON layer with the retrieved data.
+//     L.geoJSON(destin, {
+//       color: "yellow",
+//       weight: 1.5
+//     })
+//     .bindPopup("destination")
+//     .addTo(map);
+//   });
+// });
+
+//??
+torontoData.forEach(function(){
+  L.bindPopup("destination")
+  .addTo(map);
 });
 
 // // ?? https://courses.bootcampspot.com/courses/1159/pages/13-dot-5-3-map-multiple-geojson-points?module_item_id=440355
