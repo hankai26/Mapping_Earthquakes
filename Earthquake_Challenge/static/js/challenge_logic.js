@@ -103,7 +103,7 @@ function getColor(magnitude) {
   //  after the marker has been created and styled.
 
   //**************************** */
-  function getColor2(magnitude) {
+  function getColorForMajorEarthquakes(magnitude) {
     if (magnitude > 6) {
       return "#700a1f";
     }
@@ -115,11 +115,11 @@ function getColor(magnitude) {
     }
   }
   
-  function styleInfo2(feature) {
+  function styleInfoForMajorEarthquakes(feature) {
     return {
       opacity: 1,
       fillOpacity: 1,
-      fillColor: getColor2(feature.properties.mag),
+      fillColor: getColorForMajorEarthquakes(feature.properties.mag),
       color: "#000000",
       radius: getRadius(feature.properties.mag),
       stroke: true,
@@ -158,7 +158,7 @@ d3.json(majorEarthquakesData).then(function(data) {
           console.log(data);
           return L.circleMarker(latlng);
       },
-      style: styleInfo2,
+      style: styleInfoForMajorEarthquakes,
      // We create a popup for each circleMarker to display the magnitude and location of the earthquake
      //  after the marker has been created and styled.
       onEachFeature: function(feature, layer) {
