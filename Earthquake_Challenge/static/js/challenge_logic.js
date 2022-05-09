@@ -58,7 +58,7 @@ L.control.layers(baseMaps, overlays).addTo(map);
     return {
       opacity: 1,
       fillOpacity: 1,
-      fillColor: getColor(feature.properties.mag),
+      fillColor: getColor(feature.properties.mag, false),
       color: "#000000",
       radius: getRadius(feature.properties.mag),
       stroke: true,
@@ -67,7 +67,18 @@ L.control.layers(baseMaps, overlays).addTo(map);
   }
 
   // This function determines the color of the marker based on the magnitude of the earthquake.
-function getColor(magnitude) {
+function getColor(magnitude, majorEQ) {
+  if(majorEQ) {
+    if (magnitude > 6) {
+      return "#700a1f";
+    }
+    if (magnitude > 5) {
+      return "#ea2c2c";
+    }
+    if (magnitude <= 5) {
+      return "#ea822c";
+    } 
+  } else {
     if (magnitude > 5) {
       return "#ea2c2c";
     }
@@ -84,6 +95,7 @@ function getColor(magnitude) {
       return "#d4ee00";
     }
     return "#98ee00";
+  }
 }
   // This function determines the radius of the earthquake marker based on its magnitude.
   // Earthquakes with a magnitude of 0 were being plotted with the wrong radius.
@@ -103,23 +115,23 @@ function getColor(magnitude) {
   //  after the marker has been created and styled.
 
   //**************************** */
-  function getColorForMajorEarthquakes(magnitude) {
-    if (magnitude > 6) {
-      return "#700a1f";
-    }
-    if (magnitude > 5) {
-      return "#ea2c2c";
-    }
-    if (magnitude <= 5) {
-      return "#ea822c";
-    }
-  }
+  // function getColorForMajorEarthquakes(magnitude) {
+  //   if (magnitude > 6) {
+  //     return "#700a1f";
+  //   }
+  //   if (magnitude > 5) {
+  //     return "#ea2c2c";
+  //   }
+  //   if (magnitude <= 5) {
+  //     return "#ea822c";
+  //   }
+  // }
   
   function styleInfoForMajorEarthquakes(feature) {
     return {
       opacity: 1,
       fillOpacity: 1,
-      fillColor: getColorForMajorEarthquakes(feature.properties.mag),
+      fillColor: getColor(feature.properties.mag, true),
       color: "#000000",
       radius: getRadius(feature.properties.mag),
       stroke: true,
